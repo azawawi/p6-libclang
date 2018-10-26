@@ -29,9 +29,9 @@ method build($workdir) {
     my $libs = @libs.map( { "-l$_" } ).join(' ');
     my $libname = sprintf($*VM.config<dll>, "clang-perl6");
     if $*DISTRO.name eq "macosx" {
-      shell("gcc -Wall -shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/lib/llvm-3.8/include src/libclang-perl6.c -o $destdir/$libname  $libs")
+      shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/lib/llvm-3.8/include src/libclang-perl6.c -o $destdir/$libname  $libs")
     } else {
-      shell("gcc -Wall -shared -fPIC src/libclang-perl6.c -o $destdir/$libname -I /usr/lib/llvm-3.8/include/ -lclang-3.8")
+      shell("clang --shared -fPIC src/libclang-perl6.c -o $destdir/$libname -I /usr/lib/llvm-3.8/include/ -lclang-3.8")
     }
 
 }
