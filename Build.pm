@@ -43,7 +43,7 @@ method build($workdir) {
     my $libs = @libs.map( { "-l$_" } ).join(' ');
     my $libname = sprintf($*VM.config<dll>, "clang-perl6");
     if $*DISTRO.name eq "macosx" {
-      shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include/clang-c src/libclang-perl6.c -o $destdir/$libname  $libs")
+      shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include src/libclang-perl6.c -o $destdir/$libname  $libs")
     } else {
       my $libclang-config = find-libclang-config;
       die "Unable to detect clang config" unless $libclang-config.defined;
