@@ -20,8 +20,8 @@ before_install:
   - echo $TRAVIS_OS_NAME
 
   # Debian-based Linux libclang installation
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then apt-get update               ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then apt-get install libclang-dev ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update               ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libclang-dev ; fi
 
   # macOS libclang and rakudo-star installation
   # Note: rakudo-star is needed on macOS since rakudo-pkg only covers Linux
