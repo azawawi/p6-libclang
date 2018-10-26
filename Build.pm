@@ -27,11 +27,11 @@ method build($workdir) {
 
     my @libs = <clang-3.8>;
     my $libs = @libs.map( { "-l$_" } ).join(' ');
-    my $libname = sprintf($*VM.config<dll>, "libclang-perl6");
+    my $libname = sprintf($*VM.config<dll>, "clang-perl6");
     if $*DISTRO.name eq "macosx" {
-        shell("gcc -Wall -shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/lib/llvm-3.8/include libclang-perl6.c -o $destdir/$libname  $libs")
+      shell("gcc -Wall -shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/lib/llvm-3.8/include src/libclang-perl6.c -o $destdir/$libname  $libs")
     } else {
-        shell("gcc -Wall -shared -fPIC libclang-perl6.c -I /usr/lib/llvm-3.8/include -o $destdir/$libname src/libclang-perl6.c $libs");
+      shell("gcc -Wall -shared -fPIC src/libclang-perl6.c -o $destdir/$libname -I /usr/lib/llvm-3.8/include/ -lclang-3.8")
     }
 
 }
