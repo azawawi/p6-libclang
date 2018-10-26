@@ -26,9 +26,9 @@ before_install:
   # macOS libclang and rakudo-star installation
   # Note: rakudo-star is needed on macOS since rakudo-pkg only covers Linux
   # platforms
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update              ; fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install libclang    ; fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install rakudo-star ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update                    ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install llvm --with-clang ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install rakudo-star       ; fi
 
 install:
   - zef install . && zef test . --verbose
