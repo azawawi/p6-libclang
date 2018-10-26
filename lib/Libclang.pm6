@@ -21,12 +21,8 @@ class CXIndex is repr('CPointer') is export { }
 class CXTranslationUnit is repr('CPointer') is export { }
 class CXClientData is repr('CPointer') is export { }
 
-
-# See /usr/lib/llvm-3.8/include/clang-c/Index.h
-
 # CINDEX_LINKAGE CXString clang_getClangVersion(void);
 sub clang_getClangVersion is native(&libclang) is export returns Str { * }
-
 
 # CINDEX_LINKAGE CXIndex clang_createIndex(int excludeDeclarationsFromPCH,
 #                                          int displayDiagnostics);
