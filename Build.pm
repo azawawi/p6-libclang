@@ -31,7 +31,7 @@ method build($workdir) {
     if $*DISTRO.name eq "macosx" {
       shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/lib/llvm-3.8/include src/libclang-perl6.c -o $destdir/$libname  $libs")
     } else {
-      shell("clang --shared -fPIC src/libclang-perl6.c -o $destdir/$libname -I /usr/lib/llvm-3.8/include/ -lclang-3.8")
+      shell("clang --shared -fPIC src/libclang-perl6.c -o $destdir/$libname -I /usr/lib/llvm-3.4/include -I /usr/lib/llvm-3.8/include -lclang-3.8")
     }
 
 }
