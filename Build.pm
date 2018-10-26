@@ -45,7 +45,7 @@ method build($workdir) {
     if $*DISTRO.name eq "macosx" {
       shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/lib/llvm-3.8/include src/libclang-perl6.c -o $destdir/$libname  $libs")
     } else {
-      my $libclang-config = find-libclang-config();
+      my $libclang-config = find-libclang-config;
       die "Unable to detect clang config" unless $libclang-config.defined;
 
       my $includes        = $libclang-config<includes>;
