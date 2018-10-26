@@ -48,6 +48,14 @@ LEAVE free_cursor($cursor-ptr) if $cursor-ptr.defined;
 
 clang_visitChildren($cursor-ptr, &visitChildren);
 ```
+## Dependencies
+
+Please follow the instructions below based on your platform to install `libclang` development libraries / headers:
+
+|Platform|Installation command|
+|-|-|
+|Debian|`apt-get install libclang-dev`|
+|macOS|`brew update; brew install libclang`|
 
 ## Installation
 
@@ -74,7 +82,7 @@ $ AUTHOR_TESTING=1 prove -e "perl6 -Ilib"
 ## See Also
 - https://gist.githubusercontent.com/raphaelmor/3150866/raw/4f722b922ae19c9d6c328d79d5a5ca8cb018fb77/clanglib.c
 - https://shaharmike.com/cpp/libclang/
-
+- http://bastian.rieck.ru/blog/posts/2015/baby_steps_libclang_ast/
 
 ## Author
 
