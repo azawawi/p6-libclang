@@ -14,7 +14,7 @@ method build($workdir) {
         return 1;
     }
 
-    # on Unix, let us try to make it
+    # on *inux, let us try to make it
     my $makefiledir = "$workdir/src";
     my $destdir = "$workdir/resources";
     $destdir.IO.mkdir;
@@ -39,12 +39,14 @@ method build($workdir) {
       return
     }
 
-    my @libs = <clang-3.8>;
-    my $libs = @libs.map( { "-l$_" } ).join(' ');
     my $libname = sprintf($*VM.config<dll>, "clang-perl6");
     if $*DISTRO.name eq "macosx" {
-      shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include src/libclang-perl6.c -o $destdir/$libname  $libs")
+      # macOS via Homebrew
+      my @libs = <clang-7.0>;
+      my $libs = @libs.map( { "-l$_" } ).join(' ');
+      shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include src/libclang-perl6.c -o $destdir/$libname $libs")
     } else {
+      # *inux
       my $libclang-config = find-libclang-config;
       die "Unable to detect clang config" unless $libclang-config.defined;
 
