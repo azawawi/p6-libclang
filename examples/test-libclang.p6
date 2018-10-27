@@ -3,9 +3,9 @@ use v6;
 
 use NativeCall;
 use lib 'lib';
-use Libclang;
-
+use Libclang::Raw;
 sub visitChildren(Pointer[CXCursor] $cursor, Pointer[CXCursor] $parent) {
+  
   my $spelling      = clang_getCursorSpelling($cursor);
   my $kind          = clang_getCursorKind($cursor);
   my $kind-spelling = clang_getCursorKindSpelling($kind);
