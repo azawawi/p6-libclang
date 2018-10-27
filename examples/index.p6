@@ -16,4 +16,6 @@ my $translation-unit = Libclang::TranslationUnit.new($index, $file-name);
 LEAVE $translation-unit.destroy if $translation-unit.defined;
 
 my $cursor = $translation-unit.cursor;
-say $cursor;
+say $cursor.kind;
+say $cursor.spelling;
+say $cursor.kind-spelling;
