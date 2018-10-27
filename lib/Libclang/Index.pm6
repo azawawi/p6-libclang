@@ -22,17 +22,17 @@ method new(
 }
 
 multi method global-opts returns CXGlobalOptFlags {
-  die "CXIndex is undefined" unless $!index.defined;
+  die "Index is undefined" unless $!index.defined;
   return CXGlobalOptFlags(clang_CXIndex_getGlobalOptions($!index));
 }
 
 multi method global-opts(CXGlobalOptFlags $options) {
-  die "CXIndex is undefined" unless $!index.defined;
+  die "Index is undefined" unless $!index.defined;
   return clang_CXIndex_setGlobalOptions($!index, $options);
 }
 
 method destroy {
-  die "CXIndex is undefined" unless $!index.defined;
+  die "Index is undefined" unless $!index.defined;
   clang_disposeIndex($!index);
 }
 
