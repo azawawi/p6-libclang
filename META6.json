@@ -8,7 +8,11 @@
     "name"          : "Libclang",
     "perl"          : "6.c",
     "provides"      : {
-        "Libclang"           : "lib/Libclang.pm6"
+        "Libclang"                  : "lib/Libclang.pm6",
+        "Libclang::Cursor"          : "lib/Libclang/Cursor.pm6",
+        "Libclang::Index"           : "lib/Libclang/Index.pm6",
+        "Libclang::Raw"             : "lib/Libclang/Raw.pm6",
+        "Libclang::TranslationUnit" : "lib/Libclang/TranslationUnit.pm6"
     },
     "resources"     : [
         "libclang-perl6.dll",
