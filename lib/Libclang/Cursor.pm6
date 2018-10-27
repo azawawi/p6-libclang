@@ -6,7 +6,7 @@ unit class Libclang::Cursor;
 use Libclang::Raw;
 use NativeCall;
 
-has Pointer $.cursor;
+has Pointer $.cursor is required;
 
 method spelling {
   die "Cursor is undefined" unless $!cursor.defined;
@@ -27,12 +27,12 @@ method visit-children(&visitor-callback) {
   die "Cursor is undefined"   unless $!cursor.defined;
   die "Callback is undefined" unless &visitor-callback.defined;
 
-  sub visitChildren(Pointer[CXCursor] $cursor, Pointer[CXCursor] $parent) {
-    my $spelling      = clang_getCursorSpelling($cursor);
-    my $kind          = clang_getCursorKind($cursor);
-    my $kind-spelling = clang_getCursorKindSpelling($kind);
-    printf("Cursor '%s' of kind '%s'\n", $spelling, $kind-spelling);
-    return CXChildVisit_Recurse;
+  sub visitChildren(
+    Pointer[CXCursor] $cursor-pointer,
+    Pointer[CXCursor] $parent-pointer
+  ) {
+    my $cursor = Libclang::Cursor.new(:cursor($cursor-pointer));
+    return &visitor-callback($cursor);
   }
 
   clang_visitChildren($!cursor, &visitChildren);

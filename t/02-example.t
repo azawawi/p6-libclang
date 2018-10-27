@@ -1,15 +1,20 @@
-
 use v6;
-use lib 'lib';
+use Test;
+
+plan 2;
+
 use Libclang;
 use Libclang::Raw;
-
-say "clang version = " ~ Libclang.version;
 
 my $index = Libclang::Index.new;
 LEAVE $index.destroy if $index.defined;
 
-my $file-name        = $*SPEC.catfile($*PROGRAM.IO.parent, "header.hpp");
+is $index.global-opts, CXGlobalOpt_None, "initial global-opts getter works";
+my $new-value = CXGlobalOpt_ThreadBackgroundPriorityForAll;
+$index.global-opts($new-value);
+is $index.global-opts, $new-value, "global-opts setter/getter work";
+
+my $file-name        = $*SPEC.catfile($*PROGRAM.IO.parent, "files", "header.hpp");
 my $translation-unit = Libclang::TranslationUnit.new($index, $file-name);
 LEAVE $translation-unit.destroy if $translation-unit.defined;
 
@@ -20,4 +25,4 @@ $cursor.visit-children(sub ($cursor) {
   printf("Cursor '%15s' of kind '%s'\n", $cursor.spelling,
     $cursor.kind-spelling);
   return child-visit-recurse;
-})
+});
