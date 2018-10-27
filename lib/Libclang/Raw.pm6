@@ -54,9 +54,31 @@ sub clang_disposeIndex(
 ) is native(&libclang)
   is export
   { * }
-  
-# CINDEX_LINKAGE void clang_disposeTranslationUnit(CXTranslationUnit);
 
+enum CXGlobalOptFlags is export (
+  CXGlobalOpt_None                                => 0x0,
+  CXGlobalOpt_ThreadBackgroundPriorityForIndexing => 0x1,
+  CXGlobalOpt_ThreadBackgroundPriorityForEditing  => 0x2,
+  CXGlobalOpt_ThreadBackgroundPriorityForAll      => 0x1 +| 0x2
+);
+
+# CINDEX_LINKAGE void clang_CXIndex_setGlobalOptions(CXIndex, unsigned options);
+sub clang_CXIndex_setGlobalOptions(
+  CXIndex $index,
+  uint32  $options
+) is native(&libclang)
+  is export
+  { * }
+
+# CINDEX_LINKAGE unsigned clang_CXIndex_getGlobalOptions(CXIndex);
+sub clang_CXIndex_getGlobalOptions(
+  CXIndex $index
+) returns uint32
+  is native(&libclang)
+  is export
+  { * };
+
+# CINDEX_LINKAGE void clang_disposeTranslationUnit(CXTranslationUnit);
 sub clang_disposeTranslationUnit(
   CXTranslationUnit $unit
 ) is native(&libclang)
