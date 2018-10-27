@@ -4,6 +4,8 @@ use lib 'lib';
 use Libclang;
 use Libclang::Raw;
 
+say "clang version = " ~ Libclang.version;
+
 my $index = Libclang::Index.new;
 LEAVE $index.destroy if $index.defined;
 
@@ -16,6 +18,17 @@ my $translation-unit = Libclang::TranslationUnit.new($index, $file-name);
 LEAVE $translation-unit.destroy if $translation-unit.defined;
 
 my $cursor = $translation-unit.cursor;
-say $cursor.kind;
-say $cursor.spelling;
-say $cursor.kind-spelling;
+LEAVE $cursor.destroy if $cursor.defined;
+
+# $*OUT.out-buffer = False;
+
+# $cursor.visit-children(sub () { });
+# sub {
+#   say "Hello";
+#   # say $cursor.kind;
+#   # say $cursor.spelling;
+#   # say $cursor.kind-spelling;
+#   # say "-" x 40;
+# 
+#   return CXChildVisit_Recurse;
+# })
