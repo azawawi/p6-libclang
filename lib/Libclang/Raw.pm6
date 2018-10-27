@@ -7,9 +7,23 @@ use NativeCall;
 
 sub libclang {
   #TODO support windows
-  #TODO support macos
-  return '/usr/lib/llvm-3.8/lib/libclang-3.8.so';
-  # return 'libclang.so';
+
+  # macOS
+  return 'libclang.dynlib' if $*DISTRO.name eq 'darwin';
+
+  # Linux / Unix
+  my @libs = (
+    # Debian et al
+    '/usr/lib/llvm-3.4/lib/libclang.so',
+    '/usr/lib/llvm-3.8/lib/libclang.so'
+  );
+  
+  for @libs -> $lib {
+    return $lib if $lib.IO ~~ :f;
+  }
+
+  # Fallback
+  return '/usr/lib/libclang.so';
 }
 
 sub libclang-perl6 {
