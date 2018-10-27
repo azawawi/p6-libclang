@@ -41,10 +41,8 @@ method build($workdir) {
 
     my $libname = sprintf($*VM.config<dll>, "clang-perl6");
     if $*DISTRO.name eq "macosx" {
-      # macOS via Homebrew
-      my @libs = <clang-7.0>;
-      my $libs = @libs.map( { "-l$_" } ).join(' ');
-      shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include src/libclang-perl6.c -o $destdir/$libname $libs")
+      # macOS
+      shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include src/libclang-perl6.c -o $destdir/$libname -lclang")
     } else {
       # *inux
       my $libclang-config = find-libclang-config;
