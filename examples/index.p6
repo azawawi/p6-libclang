@@ -4,8 +4,6 @@ use lib 'lib';
 use Libclang;
 use Libclang::Raw;
 
-say "clang version = " ~ Libclang.version;
-
 my $index = Libclang::Index.new;
 LEAVE $index.destroy if $index.defined;
 
