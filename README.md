@@ -36,7 +36,8 @@ Please follow the instructions below based on your platform to install `libclang
 |Platform|Installation command|
 |-|-|
 |Debian|`apt-get install libclang-dev`|
-|macOS|`brew update; brew install libclang`|
+|macOS|`brew update;`<br>`brew install llvm --with-clang`|
+|Windows|Install 64-bit binaries from [here](http://releases.llvm.org/download.html#7.0.0).|
 
 ## Installation
 
