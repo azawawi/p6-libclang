@@ -7,7 +7,7 @@ use NativeCall;
 
 sub libclang {
   # Windows
-  return "C:/Program Files/LLVM/bin/libclang.dll" if $*DISRO.is-win;
+  return "C:/Program Files/LLVM/bin/libclang.dll" if $*DISTRO.is-win;
 
   # macOS
   return 'libclang.dynlib' if $*DISTRO.name eq 'darwin';

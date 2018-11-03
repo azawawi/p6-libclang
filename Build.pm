@@ -5,15 +5,6 @@ unit class Build;
 
 method build($workdir) {
 
-    if $*DISTRO.is-win {
-        # On windows, let us install the bundled DLL version, module installer
-        # will copy the DLL for us.
-        die "Windows is not supported at the moment";
-
-        # Success
-        return 1;
-    }
-
     # on *inux, let us try to make it
     my $makefiledir = "$workdir/src";
     my $destdir = "$workdir/resources";
@@ -22,7 +13,7 @@ method build($workdir) {
     # Create empty resources files for all platforms so that package managers
     # do not complain
     for <dll dylib so> -> $ext {
-        "$destdir/libclang-perl6.$ext".IO.spurt("");
+        "$destdir/libclang-perl6.$ext".IO.spurt('');
     }
 
     sub find-libclang-config {
@@ -42,9 +33,27 @@ method build($workdir) {
     my $libname = sprintf($*VM.config<dll>, "clang-perl6");
     if $*DISTRO.name eq "macosx" {
       # macOS
+      #TODO replace with run
       shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include -I /usr/local/Cellar/llvm/7.0.0/lib src/libclang-perl6.c -o $destdir/$libname -lclang")
-    } else {
+    } elsif $*DISTRO.is-win {
+      my $out-lib-path = $*SPEC.catfile($destdir, $libname);
+      my $p = run q{gcc},
+        q{--shared},
+        q{-fPIC},
+        q{-IC:/Program Files/LLVM/include},
+        q{-IC:/Program Files/LLVM/lib/clang/7.0.0/lib/windows},
+        q{-LC:/Program Files/LLVM/lib},
+        q{src/libclang-perl6.c},
+        qq{-o$out-lib-path},
+        q{-llibclang},
+        :err;
+        my $captured-error  = $p.err.slurp: :close;
+        my $exit-code = $p.exitcode;
+        die "Failed while compiling $out-lib-path:\n$captured-error" unless $exit-code == 0;
+        return 1;
+    }  else {
       # *inux
+      #TODO replace with run
       my $libclang-config = find-libclang-config;
       die "Unable to detect clang config" unless $libclang-config.defined;
 
