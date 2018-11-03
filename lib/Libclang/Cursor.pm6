@@ -38,7 +38,8 @@ method visit-children(&visitor-callback) {
     Pointer[CXCursor] $parent-pointer
   ) {
     my $cursor = Libclang::Cursor.new(:cursor($cursor-pointer));
-    return &visitor-callback($cursor);
+    my $parent = Libclang::Cursor.new(:cursor($parent-pointer));
+    return &visitor-callback($cursor, $parent);
   }
 
   clang_visitChildren($!cursor, &visitChildren);

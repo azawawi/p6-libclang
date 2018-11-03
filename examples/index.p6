@@ -14,7 +14,7 @@ LEAVE $translation-unit.destroy if $translation-unit.defined;
 my $cursor = $translation-unit.cursor;
 LEAVE $cursor.destroy if $cursor.defined;
 
-$cursor.visit-children(sub ($cursor) {
+$cursor.visit-children(sub ($cursor, $parent) {
   printf("Cursor '%15s' of kind '%s'\n", $cursor.spelling,
     $cursor.kind-spelling);
   return child-visit-recurse;
