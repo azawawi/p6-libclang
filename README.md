@@ -50,7 +50,7 @@ $ zef install Libclang
 
 - To run tests:
 ```
-$ prove -ve "perl6 -Ilib"
+$ AUTHOR_TESTING=1 zef test --verbose .
 ```
 
 - To run all tests including author tests (Please make sure
