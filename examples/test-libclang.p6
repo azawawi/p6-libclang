@@ -34,6 +34,6 @@ LEAVE clang_disposeTranslationUnit($unit) if $unit.defined;
 
 my $cursor-ptr = clang_getTranslationUnitCursor($unit);
 
-LEAVE free_cursor($cursor-ptr) if $cursor-ptr.defined;
+LEAVE free($cursor-ptr) if $cursor-ptr.defined;
 
 clang_visitChildren($cursor-ptr, &visitChildren);

@@ -144,12 +144,10 @@ sub clang_getTranslationUnitCursor(
   returns Pointer[CXCursor]
   { * };
 
-sub free_cursor(
-  Pointer[CXCursor] $cursor
-) is native(&libclang-perl6)
-  is symbol('wrapped_free_cursor')
+sub free(Pointer $pointer)
+  is native(&libclang-perl6)
+  is symbol('wrapped_free')
   is export
-  returns Pointer[CXCursor]
   { * };
 
 enum CXChildVisitResult  is export <
@@ -198,4 +196,33 @@ sub clang_getCursorKindSpelling(uint32 $kind)
   is native(&libclang)
   is export
   returns Str
+  { * }
+
+class CXSourceLocation is repr('CStruct') is export {
+  has Pointer $.ptr_data1;
+  has Pointer $.ptr_data2;
+  has uint32  $.int_data;
+}
+
+class CXSourceRange is repr('CStruct') is export {
+  has Pointer $.ptr_data1;
+  has Pointer $.ptr_data2;
+  has uint32  $.begin_int_data;
+  has uint32  $.end_int_data;
+}
+
+# CINDEX_LINKAGE CXSourceLocation clang_getCursorLocation(CXCursor);
+sub clang_getCursorLocation(Pointer[CXCursor])
+  is native(&libclang-perl6)
+  is symbol('wrapped_clang_getCursorLocation')
+  returns Pointer[CXSourceLocation]
+  is export
+  { * }
+
+# CINDEX_LINKAGE CXSourceRange clang_getCursorExtent(CXCursor);
+sub clang_getCursorExtent(uint32 $kind)
+  is native(&libclang-perl6)
+  is symbol('wrapped_clang_getCursorExtent')
+  returns Pointer[CXSourceRange]
+  is export
   { * }

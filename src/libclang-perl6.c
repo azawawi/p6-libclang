@@ -18,9 +18,9 @@ EXTERN_C CXCursor* wrapped_clang_getTranslationUnitCursor(CXTranslationUnit unit
   return result;
 }
 
-EXTERN_C void wrapped_free_cursor(CXCursor *cursor) {
-  assert(cursor != NULL);
-  free(cursor);
+EXTERN_C void wrapped_free(void *pointer) {
+  assert(pointer != NULL);
+  free(pointer);
 }
 
 EXTERN_C CXString wrapped_clang_getCursorSpelling(CXCursor *cursor) {
@@ -48,4 +48,20 @@ EXTERN_C unsigned wrapped_clang_visitChildren(
 
 EXTERN_C enum CXCursorKind wrapped_clang_getCursorKind(CXCursor* cursor) {
   return clang_getCursorKind(*cursor);
+}
+
+CINDEX_LINKAGE CXSourceLocation* wrapped_clang_getCursorLocation(CXCursor* cursor) {
+  CXSourceLocation sourceLocation = clang_getCursorLocation(*cursor);
+  CXSourceLocation* result        = (CXSourceLocation*)malloc(
+    sizeof(CXSourceLocation)
+  );
+  *result = sourceLocation;
+  return result;
+}
+
+CINDEX_LINKAGE CXSourceRange* wrapped_clang_getCursorExtent(CXCursor* cursor) {
+  CXSourceRange extent  = clang_getCursorExtent(*cursor);
+  CXSourceRange* result = (CXSourceRange*)malloc(sizeof(CXSourceRange));
+  *result               = extent;
+  return result;
 }

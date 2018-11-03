@@ -23,6 +23,12 @@ method kind-spelling {
   clang_getCursorKindSpelling(self.kind);
 }
 
+method location {
+  die "Cursor is undefined" unless $!cursor.defined;
+  my $location-ptr = clang_getCursorLocation($!cursor);
+  $location-ptr
+}
+
 method visit-children(&visitor-callback) {
   die "Cursor is undefined"   unless $!cursor.defined;
   die "Callback is undefined" unless &visitor-callback.defined;
@@ -40,5 +46,5 @@ method visit-children(&visitor-callback) {
 
 method destroy {
   die "Cursor is undefined" unless $!cursor.defined;
-  free_cursor($!cursor);
+  free($!cursor);
 }
