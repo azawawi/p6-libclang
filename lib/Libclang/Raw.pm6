@@ -6,7 +6,8 @@ unit module Libclang::Raw;
 use NativeCall;
 
 sub libclang {
-  #TODO support windows
+  # Windows
+  return "C:/Program Files/LLVM/bin/libclang.dll" if $*DISRO.is-win;
 
   # macOS
   return 'libclang.dynlib' if $*DISTRO.name eq 'darwin';
