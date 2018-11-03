@@ -12,9 +12,10 @@ method build($workdir) {
 
     # Create empty resources files for all platforms so that package managers
     # do not complain
-    for <dll dylib so> -> $ext {
-        "$destdir/libclang-perl6.$ext".IO.spurt('');
+    for <dylib so> -> $ext {
+      "$destdir/libclang-perl6.$ext".IO.spurt('');
     }
+    "$destdir/clang-perl6.dll".IO.spurt('');
 
     sub find-libclang-config {
       my @versions = <3.4 3.8>;
