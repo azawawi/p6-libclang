@@ -15,6 +15,7 @@ sub libclang {
   # Linux / Unix
   my @libs = (
     # Debian et al
+    '/usr/lib/llvm-6.0/lib/libclang.so',
     '/usr/lib/llvm-3.4/lib/libclang.so',
     '/usr/lib/llvm-3.8/lib/libclang.so'
   );
