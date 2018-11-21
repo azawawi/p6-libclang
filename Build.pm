@@ -18,7 +18,7 @@ method build($workdir) {
     "$destdir/clang-perl6.dll".IO.spurt('');
 
     sub find-libclang-config {
-      my @versions = <3.4 3.8>;
+      my @versions = <3.4 3.8 6.0>;
       for @versions -> $version {
         my $include-dir = "/usr/lib/llvm-$version/include";
         if $include-dir.IO ~~ :d {
@@ -35,7 +35,7 @@ method build($workdir) {
     if $*DISTRO.name eq "macosx" {
       # macOS
       #TODO replace with run
-      shell("clang --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include -I /usr/local/Cellar/llvm/7.0.0/lib src/libclang-perl6.c -o $destdir/$libname -lclang")
+      shell("gcc --shared -fPIC -I/usr/local/include -L/usr/local/lib -I /usr/local/Cellar/llvm/7.0.0/include -I /usr/local/Cellar/llvm/7.0.0/lib src/libclang-perl6.c -o $destdir/$libname -lclang")
     } elsif $*DISTRO.is-win {
       my $out-lib-path = $*SPEC.catfile($destdir, $libname);
       my $p = run q{gcc},
@@ -60,7 +60,7 @@ method build($workdir) {
 
       my $includes        = $libclang-config<includes>;
       my $libs            = $libclang-config<libs>;
-      shell("clang --shared -fPIC src/libclang-perl6.c -o $destdir/$libname $includes -I /usr/lib/llvm-3.8/include $libs")
+      shell("gcc --shared -fPIC src/libclang-perl6.c -o $destdir/$libname $includes -I /usr/lib/llvm-3.8/include $libs")
     }
 
 }

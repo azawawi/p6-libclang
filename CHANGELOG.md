@@ -1,5 +1,8 @@
 # Changelog for Libclang
 
+## 0.3.0 - **UNRELEASED**
+  - :tada: Add support for LLVM 6.0.
+
 ## 0.2.0 - 2018-11-3
   - :checkered_flag: Add experimental support for Windows.
   - :tada: Add more examples for indexing C functions and structures.
